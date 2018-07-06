@@ -5,6 +5,7 @@
 var snake = [];
 var direction;
 var food;
+var ignoreInput;
 
 function setup() {
 	frameRate(15);
@@ -12,6 +13,7 @@ function setup() {
 	direction = createVector(0, 0);
 	makeFood();
 	prev = millis();
+	ignoreInput = false;
 	snake.push(createVector(200, 200))
 }
 
@@ -24,6 +26,7 @@ function makeFood() {
 }
 
 function keyPressed() {
+	if (ignoreInput) return;
 	if (keyCode == LEFT_ARROW && direction.x != 1) {
 		direction = createVector(-1, 0);
 	}
@@ -36,6 +39,7 @@ function keyPressed() {
 	else if (keyCode == DOWN_ARROW && direction.y != -1) {
 		direction = createVector(0, 1);
 	}
+	ignoreInput = true;	/* we have to wait until next frame rate to be . */
 }
 
 function updatePosition() {
@@ -74,4 +78,5 @@ function draw() {
 		snake.push(block);
 		makeFood();
 	}
+	ignoreInput = false;
 }
